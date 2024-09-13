@@ -3,13 +3,13 @@ from tkinter import ttk
 import random
 import time
 
-
 def bubble_sort(data, timeTick):
     """Your implementation of the bubble sort algorithm
 
     Args:
         data (int[]): Unsorted data array
-        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI, used only to call
+        the various draw methods
     """
     return
 
