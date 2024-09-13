@@ -36,11 +36,11 @@ def drawSwap(data, pos1, pos2, outerLoopIndex, timeTick):
     This will highlight the elements in blue
 
     Args:
-        data (_type_)
-        pos1 (_type_): The position of the first element being swapped
-        pos2 (_type_): The position of the second element being swapped
-        outerLoopIndex (_type_): The current index of the outer loop
-        timeTick (_type_): The time delay between each iteration of the algorithm as defined on the UI
+        data (int[])
+        pos1 (int): The position of the first element being swapped
+        pos2 (int): The position of the second element being swapped
+        outerLoopIndex (int): The current index of the outer loop
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
     """
     colorArray = ['blue' if x == pos1 or x == pos2 else 'green' 
                   if x > len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
