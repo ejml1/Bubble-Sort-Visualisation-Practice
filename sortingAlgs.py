@@ -13,10 +13,30 @@ def bubble_sort(data, timeTick):
     """
     return
 
-########################################################################################################################
-### Drawing Methods ####################################################################################################
+def selection_sort(data, timeTick):
+    """Your implementation of the selection sort algorithm
 
-def drawComparison(data, pos1, pos2, outerLoopIndex, timeTick):
+    Args:
+        data (int[]): Unsorted data array
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI, used only to call
+        the various draw methods
+    """
+    return
+
+def merge_sort(data, timeTick):
+    """Your implementation of the merge sort algorithm
+
+    Args:
+        data (int[]): Unsorted data array
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI, used only to call
+        the various draw methods
+    """
+    return
+
+########################################################################################################################
+### Bubble Sort Drawing Methods ########################################################################################
+
+def drawBubbleSortComparison(data, pos1, pos2, outerLoopIndex, timeTick):
     """Method that should be called after each iteration of the INNER loop to show the comparison between two elements 
     in pos1 and pos2. This will highlight the elements being compared in gray
 
@@ -31,7 +51,7 @@ def drawComparison(data, pos1, pos2, outerLoopIndex, timeTick):
                   if x > len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
     drawData(data, colorArray, timeTick)
     
-def drawSwap(data, pos1, pos2, outerLoopIndex, timeTick):
+def drawBubbleSortSwap(data, pos1, pos2, outerLoopIndex, timeTick):
     """Method that should be called after two elements are swapped in pos1 and pos2. 
     This will highlight the elements in blue
 
@@ -57,9 +77,92 @@ def drawCorrectPositionGreaterEqualThanOuterLoop(data, outerLoopIndex, timeTick)
     colorArray = ['green' if x >= len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
     drawData(data, colorArray, timeTick)
 
+########################################################################################################################
+### Selection Sort Drawing Methods #####################################################################################
+
+def drawSelectionSortCompletedSection(data, index, timeTick):
+    """Method that should be called after each iteration of the OUTER loop to show the completed section of the array
+
+    Args:
+        data (int[])
+        index (int): outer loop index
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['green' if x < index else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
+
+def drawSelectionSortIter(data, outerLoopIndex, innerLoopIndex, minIndex, timeTick):
+    """Method that should be called after each iteration of the INNER loop to show the comparison between two elements
+
+    Args:
+        data (int[])
+        outerLoopIndex (int): outer loop index
+        innerLoopIndex (int): inner loop index
+        minIndex (int): smallest element index
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['green' if x < outerLoopIndex else 'lightskyblue' if x == outerLoopIndex else 'slategrey' if x == innerLoopIndex else 'cornflowerblue' if x == minIndex else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
+    
+def drawSelectionSortSwap(data, outerLoopIndex, minIndex, timeTick):
+    """Method that should be called after the smallest element is found and swapped with the outer loop index
+
+    Args:
+        data (int[])
+        outerLoopIndex (int): outer loop index
+        minIndex (int): smallest element index
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    if outerLoopIndex != minIndex:
+        colorArray = ['blue' if x == outerLoopIndex or x == minIndex else 'green' if x < outerLoopIndex else 'red' for x in range(len(data))]
+        drawData(data, colorArray, timeTick)
+
+########################################################################################################################
+### Merge Sort Drawing Methods #########################################################################################
+
+def drawSplit(data, left, right, timeTick):
+    """Method that should be called to visualise the splting the data array into a left and right part
+
+    Args:
+        data (int[])
+        left (int): left index of data
+        right (int): right index of data
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['slategrey' if left <= x <= right else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
+
+def drawMergeStart(data, left, middle, right, timeTick):
+    """Method that should be called before the merge process to visualise the left and right part of the section being merged
+
+    Args:
+        data (int[])
+        left (int): left index of data
+        middle (int): middle index of data
+        right (int): right index of data
+        timeTick (_type_): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['cornflowerblue' if left <= x < middle + 1 else 'lightsteelblue' if middle + 1 <= x <= right else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
+
+def drawSwapMerge(data, left, right, timeTick):
+    """Method that should be called after the merge process to visualise the merged section
+
+    Args:
+        data (int[])
+        left (double): left index of data
+        right (double): right index of data
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['blue' if left <= x <= right else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
 
 ########################################################################################################################
 ### Other Methods ######################################################################################################
+
+def drawComplete(data, timeTick):
+    colorArray = ['green' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
 
 root = Tk()
 root.title('Sorting Algorithm Visualisation')
@@ -106,7 +209,23 @@ def generate():
 
 def StartAlgorithm():
     global data
-    bubble_sort(data, speedScale.get())
+    if algMenu.get() == 'Bubble Sort':
+        bubble_sort(data, speedScale.get())
+    elif algMenu.get() == 'Selection Sort':
+        selection_sort(data, speedScale.get())
+    elif algMenu.get() == 'Merge Sort':
+        merge_sort(data, speedScale.get())
+
+    if isSorted(data):
+        drawComplete(data, speedScale.get())
+    else:
+        drawData(data, ['red' for x in range(len(data))], 0.1)
+
+def isSorted(data):
+    for i in range(len(data) - 1):
+        if data[i] > data[i + 1]:
+            return False
+    return True
 
 #frame / base lauout
 UI_frame = Frame(root, width= 600, height=200, bg='grey')
@@ -118,7 +237,7 @@ canvas.grid(row=1, column=0, padx=10, pady=5)
 #User Interface Area
 #Row[0]
 Label(UI_frame, text="Algorithm: ", bg='grey').grid(row=0, column=0, padx=5, pady=5, sticky=W)
-algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort'])
+algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort', 'Selection Sort', 'Merge Sort'])
 algMenu.grid(row=0, column=1, padx=5, pady=5)
 algMenu.current(0)
 
