@@ -81,7 +81,7 @@ def drawCorrectPositionGreaterEqualThanOuterLoop(data, outerLoopIndex, timeTick)
 ### Selection Sort Drawing Methods #####################################################################################
 
 def drawSelectionSortCompletedSection(data, index, timeTick):
-    """Method that should be called after each iteration of the OUTER loop to show the completed section of the array
+    """Method that should be called at each iteration of the OUTER loop to show the completed section of the array
 
     Args:
         data (int[])
@@ -92,7 +92,7 @@ def drawSelectionSortCompletedSection(data, index, timeTick):
     drawData(data, colorArray, timeTick)
 
 def drawSelectionSortIter(data, outerLoopIndex, innerLoopIndex, minIndex, timeTick):
-    """Method that should be called after each iteration of the INNER loop to show the comparison between two elements
+    """Method that should be called at each iteration of the INNER loop to show the comparison between two elements
 
     Args:
         data (int[])
